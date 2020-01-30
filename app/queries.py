@@ -29,16 +29,20 @@ def make_tx(address):
     return True
 
 def sign_tx(address):
-    w3 = Web3(HTTPProvider('http://{host}:{port}'.format(host=duc_host, port=duc_port)))
+    try:
+        w3 = Web3(HTTPProvider('http://{host}:{port}'.format(host=duc_host, port=duc_port)))
 
-    signed_txn = w3.eth.account.signTransaction({
-        'nonce': w3.eth.getTransactionCount(w3.eth.coinbase),
-        'gasPrice': w3.eth.gasPrice,
-        'gas': 100000,
-        'to': address,
-        'value': DROP_AMOUNT,
-        'data': b''
-    }, key)
+        signed_txn = w3.eth.account.signTransaction({
+            'nonce': w3.eth.getTransactionCount(w3.eth.coinbase),
+            'gasPrice': w3.eth.gasPrice,
+            'gas': 100000,
+            'to': address,
+            'value': DROP_AMOUNT,
+            'data': b''
+        }, key)
 
-    w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+        w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+        return {'success': True}
+    except Exception as error:
+        return {'success': False, 'error_message': str(error)}
 
