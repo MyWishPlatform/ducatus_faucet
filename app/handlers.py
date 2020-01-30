@@ -29,8 +29,8 @@ def transaction_request():
             return ip_address_locked()
 
         tx_response = make_tx(duc_address)
-        if not tx_response['success']:
-            return tx_failed(tx_response['error_message'])
+        # if not tx_response['success']:
+        #     return tx_failed(tx_response['error_message'])
 
         db_update(DucatusAddress, duc_address)
         db_update(IPAddress, ip)
