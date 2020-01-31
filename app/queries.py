@@ -15,7 +15,6 @@ def to_checksum(address):
 def locking_check(model, address):
     db_address = model.query.filter_by(address=address).first()
     if db_address:
-        print(db_address.__dict__)
         if db_address.last_transaction_date <= datetime.datetime.now() - datetime.timedelta(**blocking_time):
             return True
     else:

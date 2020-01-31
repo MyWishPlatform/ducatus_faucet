@@ -17,8 +17,6 @@ def transaction_request():
         else:
             return incorrect_address(checksum_response['error_message'])
 
-        print(duc_address)
-
         is_address_allowed = locking_check(DucatusAddress, duc_address)
         if not is_address_allowed:
             return duc_address_locked()
