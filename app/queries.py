@@ -1,5 +1,4 @@
 import datetime
-from app import db
 from settings_local import *
 from web3 import Web3, HTTPProvider
 from app.responses import *
