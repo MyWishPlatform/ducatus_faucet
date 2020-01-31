@@ -29,4 +29,4 @@ def incorrect_address(err):
 
 
 def success_response(address):
-    return json.dumps({'success': True, 'address': address})
+    return json.dumps({'success': True, 'code': 200, 'msg': address})
