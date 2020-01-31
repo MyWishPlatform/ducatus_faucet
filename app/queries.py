@@ -12,7 +12,7 @@ def to_checksum(address):
         return {'status': False, 'error_message': str(error)}
 
 
-def check_and_update(model, address):
+def locking_check(model, address):
     db_address = model.query.filter_by(address=address).first()
     if db_address:
         print(db_address.__dict__)
@@ -54,4 +54,3 @@ def make_tx(address):
         return {'success': True}
     except Exception as error:
         return {'success': False, 'error_message': str(error)}
-
