@@ -1,15 +1,13 @@
 import telebot
-from settings_local import bot_token, service_url, service_port
+from settings_local import bot_token, bot_message, service_url, service_port
 import requests
-import json
 
 bot = telebot.TeleBot(bot_token)
 
 
 @bot.message_handler(commands=['start', 'help'])
 def start(message):
-    print(message.chat.id)
-    bot.reply_to(message, 'text')
+    bot.send_message(chat_id=message.chat.id, text=bot_message)
 
 
 @bot.message_handler()
