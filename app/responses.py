@@ -9,7 +9,7 @@ def response_callback(error_type, msg):
         'msg': msg
     }
 
-    return make_response(json.dumps(payload))
+    return json.dumps(payload)
 
 
 def ip_address_locked():
