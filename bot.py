@@ -13,7 +13,7 @@ def start(message):
 
 @bot.message_handler()
 def transaction_request(message):
-    transaction_response = main_process(message.text, message.chat.id)
+    transaction_response = main_process(message.text, str(message.chat.id))
     response_data = transaction_response.content.decode()
     bot.send_message(chat_id=message.chat.id, text=response_data.replace(',', '\n'))
 
