@@ -1,14 +1,22 @@
 import datetime
 from app import db
 from settings_local import *
-from web3 import Web3, HTTPProvider, IPCProvider
+from web3 import Web3, HTTPProvider
+
+
+def to_checksum(address):
+    try:
+        address = Web3.toChecksumAddress(address)
+        return {'status': True, 'address': address}
+    except ValueError as error:
+        return {'status': False, 'error_message': str(error)}
 
 
 def check_and_update(model, address):
     db_address = model.query.filter_by(address=address).first()
     if db_address:
         print(db_address.__dict__)
-        if db_address.last_transaction_date <= datetime.datetime.now() - datetime.timedelta(minutes=5):
+        if db_address.last_transaction_date <= datetime.datetime.now() - datetime.timedelta(**blocking_time):
             return True
     else:
         return True
@@ -26,20 +34,21 @@ def db_update(model, address):
 
 
 def make_tx(address):
-    return True
-
-def sign_tx(address):
     try:
         w3 = Web3(HTTPProvider('http://{host}:{port}'.format(host=duc_host, port=duc_port)))
 
-        signed_txn = w3.eth.account.signTransaction({
-            'nonce': w3.eth.getTransactionCount(w3.eth.coinbase),
+        tx = {
+            'nonce': w3.eth.getTransactionCount(duc_address, 'pending'),
             'gasPrice': w3.eth.gasPrice,
-            'gas': 100000,
+            'gas': gas_value,
             'to': address,
             'value': DROP_AMOUNT,
-            'data': b''
-        }, key)
+            'data': b'',
+            'chainId': w3.eth.chainId,
+            'from': duc_address
+        }
+
+        signed_txn = w3.eth.account.signTransaction(tx, private_key)
 
         w3.eth.sendRawTransaction(signed_txn.rawTransaction)
         return {'success': True}

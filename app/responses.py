@@ -24,5 +24,9 @@ def tx_failed(err):
     return response_callback(603, err)
 
 
+def incorrect_address(err):
+    return response_callback(604, err)
+
+
 def success_response(address):
     return json.dumps({'success': True, 'address': address})
