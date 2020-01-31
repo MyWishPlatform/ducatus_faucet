@@ -33,6 +33,7 @@ protobuf==3.11.2
 psycopg2-binary==2.8.4
 pycryptodome==3.9.4
 pyrsistent==0.15.7
+pyTelegramBotAPI==3.6.7
 requests==2.22.0
 rlp==1.2.0
 six==1.14.0
